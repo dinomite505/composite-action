@@ -5,12 +5,17 @@ inputs:
     description: 'Who to greet'
     required: true
     default: 'World'
+# Specifies the outputs of the actions workflow
 outputs:
   random-number: 
     description: "Random number"
     value: ${{ steps.random-number-generator.outputs.random-number }}
+# Exec environment and steps of actions workflow
 runs:
   using: "composite"
   steps:
     - run: echo Hello ${{ inputs.who-to-greet }}
-    
+      shell: bash
+    - id: random-number-generator
+      run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+      shell: bash
